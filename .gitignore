@@ -1,0 +1,7 @@
+.DS_Store
+/02_vol_hw_pub.pdf
+/work/
+/output/
+/tmp/
+__pycache__/
+.venv/
