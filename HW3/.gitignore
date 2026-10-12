@@ -1,0 +1,9 @@
+__pycache__/
+work/*.json
+work/*.csv
+work/*.png
+work/.mplconfig-backtest/
+output/
+*.aux
+*.log
+*.out

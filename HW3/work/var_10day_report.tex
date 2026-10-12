@@ -1,0 +1,83 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.7in,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,booktabs,xcolor,fancyhdr,microtype}
+\usepackage[colorlinks=true,linkcolor=teal,urlcolor=teal]{hyperref}
+\definecolor{navy}{HTML}{192B4D}
+\definecolor{teal}{HTML}{007D80}
+\definecolor{pale}{HTML}{F3F6F8}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small MF 731 | Homework 3}
+\fancyhead[R]{\small Ten-Day VaR}
+\fancyfoot[C]{\small\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\hypersetup{pdftitle={MF 731 Homework 3 - Ten-Day VaR}}
+\begin{document}
+{\LARGE\bfseries\textcolor{navy}{Ten-Day VaR of Delta-Hedged Puts}}
+
+\textbf{Setup.} I use the assigned rounded parameters:
+$S_0=152.51$, $K=170$, $T=0.292$, $r=0.00119$,
+$\sigma=0.4907$, $\mu=0.1691$ and $\Delta=1/252$.
+There are 100 short puts, with no additional contract multiplier.
+$P$ is the Black--Scholes \emph{put} price; ``call'' in the handout is a typo.
+Loss is $L_j=100(V_0-V_j)$, where $V$ is value per put.
+I keep the initial stock hedge fixed over both horizons and let the initial
+cash balance earn interest, using the handout's terminal-value formula.
+
+\textbf{1. One-day simulation and time scaling.}
+For each of 40,000 paths, simulate ten independent standard normal shocks:
+\[
+S_j=S_{j-1}\exp\!\left[
+  \left(\mu-\tfrac12\sigma^2\right)\Delta
+  +\sigma\sqrt{\Delta}\,Z_j\right].
+\]
+I use seed 731 and the first day of these paths for the one-day calculation.
+Initially $h_0=\partial_sP(0,S_0)=-0.608555$ and
+$Y_0=-h_0S_0$, as specified, so $V_0=-P(0,S_0)$.
+The first-day value is
+\[
+V_1=h_0S_1+Y_0e^{r\Delta}-P(\Delta,S_1).
+\]
+The empirical 95\% VaR is the 38,000th sorted loss, with no interpolation.
+This gives a one-day VaR of \textbf{\$30.14} and
+\[
+\widehat{\mathrm{VaR}}_{10}^{\mathrm{scale}}
+=\sqrt{10}\,\widehat{\mathrm{VaR}}_1
+=\boxed{\$95.32}.
+\]
+
+\textbf{2. Ten-day time aggregation.}
+Aggregate the ten simulated daily log returns within each path:
+\[
+X_{10}=\sum_{j=1}^{10}\log(S_j/S_{j-1}),
+\qquad S_{10}=S_0e^{X_{10}}.
+\]
+Then reprice the put with remaining maturity $T-10\Delta$ and calculate
+\[
+V_{10}=h_0S_{10}+Y_0e^{10r\Delta}-P(10\Delta,S_{10}).
+\]
+The 95th percentile of $100(V_0-V_{10})$ is
+\[
+\widehat{\mathrm{VaR}}_{10}^{\mathrm{aggregate}}=\boxed{\$308.28}.
+\]
+
+\textbf{3. Comparison.}
+Time aggregation gives a VaR \$212.96 higher than time scaling,
+or about 3.23 times as large. The square-root rule is exact for sums of
+independent zero-mean normal losses. Here the initial delta hedge
+cancels the linear price term, leaving mainly the short put's gamma exposure.
+The leading random loss term is quadratic in the stock move. Ten-day log
+returns have ten times the one-day variance, so their squared shocks scale
+roughly with ten rather than $\sqrt{10}$. The fixed hedge also becomes less
+effective after a large move. These effects explain why time scaling
+substantially understates the fully repriced ten-day VaR.
+
+\vfill
+\begin{center}
+\colorbox{pale}{\parbox{0.94\linewidth}{\centering
+\textbf{Python code and running instructions}\\[4pt]
+\url{https://github.com/jesuswalking/MF-731-HW1/tree/main/HW3}
+}}
+\end{center}
+\end{document}

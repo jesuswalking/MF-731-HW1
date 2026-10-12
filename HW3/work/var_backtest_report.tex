@@ -1,0 +1,78 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.65in,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,booktabs,graphicx,xcolor,microtype,fancyhdr}
+\usepackage[colorlinks=true,urlcolor=teal]{hyperref}
+\definecolor{navy}{HTML}{192B4D}
+\definecolor{teal}{HTML}{007D80}
+\definecolor{pale}{HTML}{F3F6F8}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small MF 731 | Homework 3}
+\fancyhead[R]{\small VaR Backtesting}
+\fancyfoot[C]{\small\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\hypersetup{pdftitle={MF 731 Homework 3 - VaR Backtesting}}
+\input{var_backtest_numbers.tex}
+\begin{document}
+{\LARGE\bfseries\textcolor{navy}{One-Day VaR Backtesting}}
+
+\textbf{1. Data.} Use the S\&P 500 daily closing index from Yahoo Finance
+(\texttt{\^{}GSPC}), from 2016-05-23 through 2026-05-22, inclusive.
+There are $N=\PriceCount$ prices and \ReturnCount{} log returns.
+The first and last five observations are:
+\begin{center}
+\begin{tabular}{lrrr}\toprule
+Date & Close & Date & Close\\\midrule
+\DataRowA
+\DataRowB
+\DataRowC
+\DataRowD
+\DataRowE
+\bottomrule\end{tabular}
+\end{center}
+
+\textbf{2. Forecasts.} For $x_t=\log(P_t/P_{t-1})$, the loss on the
+constant \$1 position is $L_t=1-e^{x_t}$. Each forecast uses only returns
+known before day $t$. Historical VaR is the 95th percentile of the full
+losses from the previous $M=1010$ returns, using the empirical inverse
+CDF (the 960th smallest loss).
+
+Initialize the normal model with the first 1010 returns:
+$\widehat\mu=\InitialMean$, $\widehat\sigma=\InitialSD$
+(sample standard deviation). After each observed return, update
+\[
+\widehat\mu_{t+1}=0.97\widehat\mu_t+0.03x_t,\qquad
+\widehat\sigma_{t+1}^2=0.97\widehat\sigma_t^2
+ +0.03(x_t-\widehat\mu_t)^2.
+\]
+The day-$t$ normal VaR is
+$1-\exp\!\big(\widehat\mu_t+\widehat\sigma_t\Phi^{-1}(0.05)\big)$.
+Both methods evaluate the same $J=N-1-M=\TestCount$ returns,
+from \TestStart{} to 2026-05-22. Since $N$ counts prices, differencing
+loses one observation; this gives $J=N-1-M$ rather than the handout's $N-M$.
+
+\begin{center}
+\includegraphics[width=\linewidth]{var_backtest_plot.png}
+\end{center}
+
+\textbf{3. Exceedance counts.} Count an exceedance when $L_t>\mathrm{VaR}_t$.
+Under correct coverage with independent exceedance indicators,
+$K\sim\mathrm{Binomial}(\TestCount,0.05)$, so $E[K]=\ExpectedCount$.
+The central 95\% binomial interval is
+$[F_K^{-1}(0.025),F_K^{-1}(0.975)]=[\CountLower,\CountUpper]$.
+\begin{center}
+\begin{tabular}{lrrc}\toprule
+Method & Exceedances & Rate & 95\% count interval\\\midrule
+Historical & \HistCount & \HistRate & \HistDecision\\
+Normal EWMA & \NormalCount & \NormalRate & \NormalDecision\\
+\bottomrule\end{tabular}
+\end{center}
+\CountConclusion
+
+\begin{center}
+\colorbox{pale}{\parbox{0.94\linewidth}{\centering
+\textbf{Python code and running instructions}\\[3pt]
+\url{https://github.com/jesuswalking/MF-731-HW1/tree/main/HW3}}}
+\end{center}
+\end{document}

@@ -1,0 +1,53 @@
+{
+  "python_version": "3.13.7",
+  "sources": [
+    {
+      "symbol": "MSFT",
+      "start_inclusive": "2024-05-23",
+      "end_inclusive": "2026-05-22",
+      "field": "Close (unadjusted)",
+      "download_date": "2026-10-12",
+      "query_url": "https://query1.finance.yahoo.com/v8/finance/chart/MSFT?period1=1716422400&period2=1779494400&interval=1d",
+      "csv_file": "msft_close.csv",
+      "csv_sha256": "615ad693061eba8ef11fc527796142850606c29d36fb2e0eb8be92ae657301b2",
+      "raw_file": "msft_yahoo_raw.json",
+      "raw_sha256": "a85b3d168ded457586e8a3d28d377bc2cb0dcea464ee50ce8f5aa9138b462b56"
+    },
+    {
+      "symbol": "AAPL",
+      "start_inclusive": "2024-05-23",
+      "end_inclusive": "2026-05-22",
+      "field": "Close (unadjusted)",
+      "download_date": "2026-10-12",
+      "query_url": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?period1=1716422400&period2=1779494400&interval=1d",
+      "csv_file": "aapl_close.csv",
+      "csv_sha256": "aae84b140ee82ab08829d2dee221aa95f3406c2cbf9ea0e6657958ea39027850",
+      "raw_file": "aapl_yahoo_raw.json",
+      "raw_sha256": "af68941d928adaaf475b81e7e3848adcad1b5a29a7580bc52c3fe898aea9532b"
+    },
+    {
+      "symbol": "GOOGL",
+      "start_inclusive": "2024-05-23",
+      "end_inclusive": "2026-05-22",
+      "field": "Close (unadjusted)",
+      "download_date": "2026-10-12",
+      "query_url": "https://query1.finance.yahoo.com/v8/finance/chart/GOOGL?period1=1716422400&period2=1779494400&interval=1d",
+      "csv_file": "googl_close.csv",
+      "csv_sha256": "6a34ea390a8bc676e2d7d4b91981a7abeee46c77619baa0be02e24f4d2f9f5c7",
+      "raw_file": "googl_yahoo_raw.json",
+      "raw_sha256": "35841e1eaac6e23acbc876db2d2989d0f1669cbf503892a168d0e9b86f7a0905"
+    },
+    {
+      "symbol": "^GSPC",
+      "start_inclusive": "2016-05-23",
+      "end_inclusive": "2026-05-22",
+      "field": "Close (unadjusted)",
+      "download_date": "2026-10-12",
+      "query_url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?period1=1463961600&period2=1779494400&interval=1d",
+      "csv_file": "sp500_close.csv",
+      "csv_sha256": "aaa3ca113799d2db5d82b08320649030a5655a380d699ef8060e582f705dbd55",
+      "raw_file": "sp500_yahoo_raw.json",
+      "raw_sha256": "ac2573a19cb2a54d9677c45abc0c110c0c272b7343bac7ac687d835c06a4f228"
+    }
+  ]
+}
