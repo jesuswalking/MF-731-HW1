@@ -1,0 +1,83 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.7in,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,booktabs,xcolor,fancyhdr,microtype}
+\usepackage[colorlinks=true,urlcolor=teal]{hyperref}
+\definecolor{navy}{HTML}{192B4D}
+\definecolor{teal}{HTML}{007D80}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small MF 731 | Homework 4}
+\fancyhead[R]{\small 09: Scenario Analysis}
+\fancyfoot[C]{\small\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\hypersetup{pdftitle={MF 731 - Scenario Analysis}}
+\begin{document}
+{\Large\bfseries\textcolor{navy}{Scenario Analysis of a Delta-Hedged Option}}
+
+\textbf{(a) Option price.} Write $\tau=T-t$. Under $Q$, the stock drifts are $r$,
+and the log returns are jointly normal. Their moments give
+\[
+E^Q[(S_T^{(i)})^2\mid S_t^{(i)}=s_i]=s_i^2e^{(2r+\sigma_i^2)\tau},\qquad
+E^Q[S_T^{(1)}S_T^{(2)}\mid S_t=s]=s_1s_2e^{(2r+\rho\sigma_1\sigma_2)\tau}.
+\]
+Expanding the squared payoff and discounting therefore gives
+\[
+\boxed{V(t,s_1,s_2;\sigma,\rho)=e^{r\tau}
+\left(s_1^2e^{\sigma_1^2\tau}-2s_1s_2e^{\rho\sigma_1\sigma_2\tau}
++s_2^2e^{\sigma_2^2\tau}\right).}
+\]
+The deltas used for the initial hedge are
+\[
+\begin{aligned}
+\partial_{s_1}V&=2e^{r\tau}\left(s_1e^{\sigma_1^2\tau}-s_2e^{\rho\sigma_1\sigma_2\tau}\right),\\
+\partial_{s_2}V&=2e^{r\tau}\left(s_2e^{\sigma_2^2\tau}-s_1e^{\rho\sigma_1\sigma_2\tau}\right).
+\end{aligned}
+\]
+
+\textbf{(b) Worst-case loss.} I use the supplied parameters, with
+$r=0.0132$, $T=0.25$ and horizon $d=5/252$ years.
+Initially,
+\[
+V(0)=921.739866,\qquad h_1=-21.952543,\qquad h_2=31.201877.
+\]
+The stock holdings are $(-h_1,-h_2)$, kept fixed for five days.
+Using the portfolio definition in the question,
+\[
+\mathcal V_0=V(0)-h_1S_0^{(1)}-h_2S_0^{(2)}=-921.739866,
+\]
+\[
+\mathcal V_d=V(d,S_0^{(1)}e^{x_1},S_0^{(2)}e^{x_2};\sigma',\rho')
+-h_1S_0^{(1)}e^{x_1}-h_2S_0^{(2)}e^{x_2},\qquad
+\ell=\mathcal V_0-\mathcal V_d.
+\]
+I enumerate all $6^4\times3=3{,}888$ scenarios and reprice with remaining
+maturity $T-d$. The largest loss is $\boxed{1{,}000.36}$.
+
+\begin{center}
+\begin{tabular}{lrr}\toprule
+Maximizing scenario & (b) Worst loss & (c) Worst weighted loss\\\midrule
+Log returns $(x_1,x_2)$ & $(0.20,0.20)$ & $(0.05,0.05)$\\
+Volatility factors $(\sigma_1'/\sigma_1,\sigma_2'/\sigma_2)$ & $(0.5,0.5)$ & $(0.75,0.75)$\\
+New volatilities $(\sigma_1',\sigma_2')$ & $(0.1107,0.1518)$ & $(0.16605,0.2277)$\\
+Correlation shift $\rho'-\rho$ & $+0.5$ & $+0.5$\\
+New correlation $\rho'$ & $0.737$ & $0.737$\\
+Portfolio loss $\ell$ & $1{,}000.36$ & $672.66$\\\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{(c) Weighted scenario risk.} I multiply the five factor weights from
+the question and maximize $w\ell$. The maximizing scenario is in the right
+column above. Its weight is
+\[
+w=1\times1\times1.25\times1.25\times1.25=1.953125,
+\qquad \max_n(w_n\ell_n)=\boxed{1{,}313.79}.
+\]
+Its actual portfolio loss is $\boxed{672.66}$.
+The weights are used as given, without normalization. Since they can exceed
+one, the weighted risk can exceed the worst unweighted loss.
+
+\vfill
+\textbf{Python code and running instructions:}\\
+\url{https://github.com/jesuswalking/MF-731-HW1/tree/main/HW4}
+\end{document}

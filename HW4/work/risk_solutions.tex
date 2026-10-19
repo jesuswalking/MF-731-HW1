@@ -1,0 +1,83 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.7in,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,xcolor,fancyhdr,microtype}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\definecolor{navy}{HTML}{192B4D}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small MF 731 | 07: Risk Measures}
+\fancyhead[R]{\small Homework Solutions}
+\fancyfoot[C]{\small\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\titlespacing*{\section}{0pt}{12pt}{5pt}
+\hypersetup{pdftitle={MF 731 - Entropic Risk Measure: Solutions},
+ pdfsubject={Cash-additivity, monotonicity, convexity and failure of positive homogeneity}}
+\begin{document}
+\setlength{\abovedisplayskip}{7pt}
+\setlength{\belowdisplayskip}{7pt}
+\setlength{\abovedisplayshortskip}{4pt}
+\setlength{\belowdisplayshortskip}{5pt}
+{\LARGE\bfseries\textcolor{navy}{Entropic Risk Measure}}
+
+For a loss $L$ and fixed $\gamma>0$, define
+\[
+\rho(L)=\frac{1}{\gamma}\ln\mathbb E[e^{\gamma L}].
+\]
+We consider losses for which this expectation is finite.
+
+\section*{1. Cash-additivity and monotonicity}
+For any constant $c\in\mathbb R$,
+\[
+\rho(L+c)=\frac{1}{\gamma}\ln\left(e^{\gamma c}\mathbb E[e^{\gamma L}]\right)
+=c+\frac{1}{\gamma}\ln\mathbb E[e^{\gamma L}]
+=\boxed{\rho(L)+c.}
+\]
+Thus adding a certain loss $c$ increases the required capital by $c$.
+Equivalently, adding cash $c$ reduces the loss to $L-c$ and gives
+$\rho(L-c)=\rho(L)-c$.
+
+If $L_1\le L_2$ almost surely, then $e^{\gamma L_1}\le e^{\gamma L_2}$ almost surely.
+Taking expectations and using that $\ln$ is increasing and $\gamma>0$ gives
+\[
+\boxed{\rho(L_1)\le\rho(L_2).}
+\]
+
+\section*{2. Convexity using H\"older's inequality}
+Let $0<\theta<1$, and set $p=1/\theta$ and $q=1/(1-\theta)$, so
+$1/p+1/q=1$. H\"older's inequality gives
+\begin{align*}
+\mathbb E\!\left[e^{\gamma(\theta L_1+(1-\theta)L_2)}\right]
+&=\mathbb E\!\left[(e^{\gamma L_1})^\theta
+                         (e^{\gamma L_2})^{1-\theta}\right]\\
+&\le\left(\mathbb E[e^{\gamma L_1}]\right)^\theta
+      \left(\mathbb E[e^{\gamma L_2}]\right)^{1-\theta}.
+\end{align*}
+Taking logarithms and dividing by $\gamma$ yields
+\[
+\boxed{\rho(\theta L_1+(1-\theta)L_2)
+\le\theta\rho(L_1)+(1-\theta)\rho(L_2).}
+\]
+The cases $\theta=0$ and $\theta=1$ are equalities. Together with Question 1,
+this proves that $\rho$ is a convex risk measure.
+
+\section*{3. Failure of coherence}
+Let $L\sim N(0,1)$ and $\lambda>0$. Completing the square gives
+\begin{align*}
+\mathbb E[e^{\gamma\lambda L}]
+&=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty}
+       e^{\gamma\lambda x-x^2/2}\,dx\\
+&=e^{\gamma^2\lambda^2/2}\frac{1}{\sqrt{2\pi}}
+  \int_{-\infty}^{\infty}e^{-(x-\gamma\lambda)^2/2}\,dx
+=e^{\gamma^2\lambda^2/2}.
+\end{align*}
+Therefore
+\[
+\boxed{\rho(\lambda L)=\frac{\gamma\lambda^2}{2},}
+\qquad
+\lambda\rho(L)=\frac{\gamma\lambda}{2}.
+\]
+For example, $\rho(2L)=2\gamma$ whereas $2\rho(L)=\gamma$.
+Positive homogeneity fails, so the entropic risk measure is \textbf{not coherent}.
+\end{document}
