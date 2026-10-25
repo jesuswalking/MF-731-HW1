@@ -1,0 +1,89 @@
+{
+  "symbols": [
+    "MSFT",
+    "AAPL"
+  ],
+  "price_count": 1260,
+  "return_count": 1259,
+  "first_return_date": "2011-09-01",
+  "last_return_date": "2016-09-01",
+  "price_field": "Close (split-adjusted, not dividend-adjusted)",
+  "data_csv_sha256": "7b4f67e6663acc343e4fc7429e75363cbb7713f8d5bc1d862a0231e20a9b84b9",
+  "market_caps_billion": [
+    448.77,
+    575.11
+  ],
+  "weights": [
+    0.4383033167949369,
+    0.5616966832050632
+  ],
+  "dollar_positions": [
+    438303.3167949369,
+    561696.6832050631
+  ],
+  "portfolio_value": 1000000.0,
+  "confidence": 0.95,
+  "days": 10,
+  "decay_mean": 0.97,
+  "decay_covariance": 0.97,
+  "paths": 50000,
+  "seed": 731,
+  "numpy_version": "2.4.4",
+  "rng": "PCG64",
+  "ewma_mean": [
+    0.0012502510822769205,
+    0.0010606909286859374
+  ],
+  "ewma_covariance": [
+    [
+      0.00012989710864562385,
+      3.300660876990382e-05
+    ],
+    [
+      3.300660876990382e-05,
+      0.00015185171532560715
+    ]
+  ],
+  "ewma_daily_sd": [
+    0.011397241273467184,
+    0.01232281280088305
+  ],
+  "ewma_correlation": 0.23501268931860073,
+  "initial_var_1day": 14383.871612417764,
+  "initial_var_10day": 45485.795866678825,
+  "initial_regulatory_capital": 136457.38760003648,
+  "msft_conditional_mean": -0.012142230530175463,
+  "msft_conditional_sd": 0.01107803078602099,
+  "shock_log_returns": [
+    -0.06753238446028041,
+    -0.06055337307572931
+  ],
+  "shock_day_loss": 63612.29691352769,
+  "post_shock_mean": [
+    -0.0008132279839998015,
+    -0.0007877309914465218
+  ],
+  "post_shock_covariance": [
+    [
+      0.0002679317239516634,
+      0.00015915574176815164
+    ],
+    [
+      0.00015915574176815164,
+      0.0002611849503600444
+    ]
+  ],
+  "a_average_loss": 70838.03645927575,
+  "b_stressed_var": 151692.5973016483,
+  "c_exceed_initial_var_count": 34955,
+  "c_exceed_initial_var_pct": 69.91,
+  "d_exceed_capital_count": 4445,
+  "d_exceed_capital_pct": 8.89,
+  "diagnostics": {
+    "exact_expected_loss": 70802.45458418597,
+    "exact_loss_sd": 49067.322093321745,
+    "sample_loss_sd": 49280.700773884,
+    "sample_mean_standard_error": 219.4357353490894,
+    "sample_mean_z_score": 0.16215168889052356
+  }
+}

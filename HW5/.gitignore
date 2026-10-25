@@ -1,0 +1,8 @@
+__pycache__/
+tmp/
+*.aux
+*.log
+*.out
+*.zip
+work/stressed_losses.csv
+data/*_yahoo_raw.json

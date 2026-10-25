@@ -1,0 +1,35 @@
+{
+  "provider": "Yahoo Finance chart API",
+  "price_field": "Close (split-adjusted, not dividend-adjusted)",
+  "symbols": [
+    "MSFT",
+    "AAPL"
+  ],
+  "first_price_date": "2011-08-31",
+  "last_price_date": "2016-09-01",
+  "first_return_date": "2011-09-01",
+  "last_return_date": "2016-09-01",
+  "price_count": 1260,
+  "return_count": 1259,
+  "csv_file": "daily_close.csv",
+  "csv_sha256": "7b4f67e6663acc343e4fc7429e75363cbb7713f8d5bc1d862a0231e20a9b84b9",
+  "note": "The preceding close on 2011-08-31 is included to form the return dated 2011-09-01. Raw download snapshots are retained locally; the CSV is sufficient to run the submitted code offline.",
+  "sources": [
+    {
+      "symbol": "MSFT",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/MSFT?period1=1314748800&period2=1472774400&interval=1d",
+      "download_date": "2026-10-24",
+      "raw_file": "msft_yahoo_raw.json",
+      "raw_sha256": "b763620959db5f51deb75624ce9f84c0ab36b4c0bca4203d5df92ce01db1a4ee",
+      "observation_count": 1260
+    },
+    {
+      "symbol": "AAPL",
+      "url": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?period1=1314748800&period2=1472774400&interval=1d",
+      "download_date": "2026-10-24",
+      "raw_file": "aapl_yahoo_raw.json",
+      "raw_sha256": "1e0317a8cd17f8d6188c9832a467e5544a6fea00e1f060877c7bd040b9905436",
+      "observation_count": 1260
+    }
+  ]
+}

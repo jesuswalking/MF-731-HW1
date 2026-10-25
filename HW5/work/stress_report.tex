@@ -1,0 +1,87 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.7in,headheight=14pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,booktabs,xcolor,fancyhdr,microtype}
+\usepackage[colorlinks=true,urlcolor=teal]{hyperref}
+\definecolor{navy}{HTML}{192B4D}
+\definecolor{teal}{HTML}{007D80}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small MF 731 | Homework 5}
+\fancyhead[R]{\small 09: Stress Testing}
+\fancyfoot[C]{\small\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\hypersetup{pdftitle={MF 731 Homework 5 - Stress Testing}}
+\begin{document}
+{\Large\bfseries\textcolor{navy}{Stress Testing a Microsoft--Apple Portfolio}}
+
+\textbf{Data and EWMA.}
+I use Yahoo Finance daily closing prices, adjusted for stock splits but not
+dividends. The 1,259 log returns are dated September 1, 2011 through
+September 1, 2016; the August 31, 2011 close supplies the first return.
+The given market caps imply weights $(0.438303,0.561697)$, so the
+\$1,000,000 portfolio has fixed initial dollar positions
+$\theta_t=(438{,}303.32,561{,}696.68)^\top$, ordered as (MSFT, AAPL).
+Starting from zero, I update the mean and covariance with decay $0.97$,
+using the previous mean in each covariance residual. The final estimates are
+\[
+\mu=\begin{pmatrix}0.00125025\\0.00106069\end{pmatrix},\qquad
+\Sigma=\begin{pmatrix}
+0.000129897&0.000033007\\
+0.000033007&0.000151852
+\end{pmatrix},\qquad \rho=0.235013.
+\]
+
+\textbf{Initial VaR and capital.}
+For the normally distributed one-day linearized loss,
+\[
+\mathrm{VaR}_{0.95,1}
+=-\theta_t^\top\mu+1.644854\sqrt{\theta_t^\top\Sigma\theta_t}
+=\$14{,}383.87.
+\]
+Applying the requested square-root-of-time rule gives
+\[
+\mathrm{VaR}_{0.95,10}^{\mathrm{scale}}
+=\sqrt{10}\,\mathrm{VaR}_{0.95,1}
+=\boxed{\$45{,}485.80},\qquad
+C=3\,\mathrm{VaR}_{0.95,10}^{\mathrm{scale}}
+=\boxed{\$136{,}457.39}.
+\]
+
+\textbf{Shock and simulation.}
+Apple's five-sigma log-return shock is $x^{(2)}=-0.0605534$.
+Conditional on this value, Microsoft's mean and standard deviation are
+$\widetilde\mu^{(1)}=-0.0121422$ and
+$\widetilde\sigma^{(1)}=0.0110780$. Its conditional five-sigma shock is
+\[
+x^{(1)}=\widetilde\mu^{(1)}-5\widetilde\sigma^{(1)}=-0.0675324.
+\]
+Both first-day returns are fixed. After updating EWMA with this shock,
+I simulate days 2--10 from the current bivariate normal distribution,
+updating the mean and covariance separately along each path.
+For each of 50,000 paths (seed 731), I compute
+\[
+\ell_m=-\theta_t^\top\sum_{k=1}^{10}X_{t+k\Delta}^{m}.
+\]
+The empirical 95\% VaR is the 47,500th sorted loss, without interpolation.
+
+\begin{center}
+\begin{tabular}{llr}\toprule
+ & Requested result & Estimate\\\midrule
+(a) & Average stressed ten-day loss & \$70,838.04\\
+(b) & Stressed ten-day 95\% VaR & \$151,692.60\\
+(c) & Loss above initial ten-day VaR & 69.91\% \; (34,955/50,000)\\
+(d) & Loss above initial regulatory capital & 8.89\% \; (4,445/50,000)\\\bottomrule
+\end{tabular}
+\end{center}
+
+The stressed VaR is about 3.34 times the initial ten-day VaR and exceeds
+the initial capital by \$15,235.21. Under this stress scenario, the capital
+is exceeded more often than the 5\% rate associated with a 95\% VaR.
+As a simulation check, the exact conditional mean loss is \$70,802.45;
+the simulated mean is only 0.16 Monte Carlo standard errors away.
+
+\vfill
+\textbf{Python code, data and running instructions:}\\
+\url{https://github.com/jesuswalking/MF-731-HW1/tree/main/HW5}
+\end{document}
